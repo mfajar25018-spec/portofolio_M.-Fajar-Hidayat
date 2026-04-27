@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio | M. Fajar Hidayat</title>
+
+    <!-- GOOGLE FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- AOS ANIMATION -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palet abu-abu profesional sesuai logo */
+            --bg-body: #1a1a1a; 
+            --bg-section-alt: #262626; 
+            --bg-card: #262626; 
+            --text-main: #ffffff; 
+            --text-dim: #9ca3af; 
+            --accent: #ffffff; 
+            --border-color: #333333;
+            --header-h: 70px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden; 
+        }
+
+        /* HEADER RESPONSIF */
+        header {
+            height: var(--header-h);
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5%;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-box img {
+            height: clamp(35px, 5vw, 45px);
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        .nav-desktop {
+            display: flex;
+            list-style: none;
+            gap: clamp(10px, 1.5vw, 20px);
+        }
+
+        .nav-desktop a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: clamp(0.75rem, 1vw, 0.85rem);
+            transition: 0.3s;
+            white-space: nowrap;
+            opacity: 0.8;
+        }
+
+        .nav-desktop a:hover, .nav-desktop a.active {
+            opacity: 1;
+            color: #fff;
+        }
+
+        .menu-btn {
+            display: none;
+            cursor: pointer;
+            font-size: 1.4rem;
+            color: #ffffff;
+        }
+
+        /* MOBILE NAV */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: min(280px, 80%);
+            height: 100vh;
+            background: var(--bg-section-alt);
+            z-index: 1001;
+            padding: 80px 30px;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+        }
+
+        .mobile-nav.active { right: 0; }
+
+        .mobile-nav a {
+            text-decoration: none;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+
+        .overlay.active { opacity: 1; visibility: visible; }
+
+        /* SECTION STYLING */
+        section {
+            padding: clamp(60px, 10vh, 100px) 5% clamp(40px, 8vh, 60px);
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .hero-info {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-info h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+
+        .hero-info p {
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            color: #ffffff; 
+            max-width: 500px;
+        }
+
+        .hero-img {
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-img img {
+            width: clamp(200px, 25vw, 320px);
+            aspect-ratio: 1 / 1;
+            border-radius: clamp(16px, 3vw, 24px); 
+            object-fit: cover;
+            border: 3px solid var(--border-color);
+            background: #2a2a2a;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+        }
+
+        /* KARTU & GRID */
+        .card {
+            background: var(--bg-card);
+            padding: clamp(20px, 4vw, 30px);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: var(--border-color);
+        }
+
+        .list-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+            gap: 20px;
+        }
+
+        .list-item {
+            background: var(--bg-card);
+            padding: clamp(16px, 3vw, 24px); 
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s ease, border-color 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .list-item:hover {
+            transform: translateY(-5px);
+            border-color: #555;
+        }
+
+        .list-item h3 {
+            font-size: clamp(1rem, 1.2vw, 1.1rem);
+            margin-bottom: 6px;
+            color: #fff;
+        }
+
+        .list-item .year-tag {
+            font-size: 0.8rem;
+            color: var(--text-dim); /* Warna tahun (abu-abu) */
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .list-item p {
+            font-size: 0.9rem;
+            color: var(--text-dim); /* Keterangan pengalaman diubah ke warna abu-abu (seperti tahun) */
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: 0.2s;
+            margin-top: 15px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        .btn-link:hover {
+            background: #fff;
+            color: #000;
+        }
+
+        /* KONTAK */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: clamp(10px, 2vw, 20px);
+        }
+
+        .contact-link {
+            padding: 20px 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            transition: 0.3s ease;
+            text-align: center;
+        }
+
+        .contact-link i {
+            font-size: 1.5rem;
+        }
+
+        .contact-link span {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .contact-link:hover {
+            background: #fff;
+            color: #000;
+            transform: scale(1.05);
+        }
+
+        footer {
+            padding: 40px 5%;
+            background: #0d0d0d;
+            text-align: center;
+            color: #ffffff;
+            font-size: clamp(0.7rem, 1vw, 0.8rem);
+            border-top: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0 20px; }
+            .nav-desktop { display: none; }
+            .menu-btn { display: block; }
+            .hero { 
+                flex-direction: column-reverse; 
+                text-align: center; 
+                justify-content: center;
+                min-height: auto;
+                padding-top: 40px;
+            }
+            .hero-info p { margin: 0 auto; }
+            .contact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 480px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .hero-img img { width: 180px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="overlay" id="overlay"></div>
+
+<header>
+    <div class="logo-box">
+        <img src="https://lh3.googleusercontent.com/u/0/d/1p4GUn-eN4_R81e1K-3DAtze2RZgfkCrI" alt="Logo">
+    </div>
+    <ul class="nav-desktop">
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#profil">Profil</a></li>
+        <li><a href="#pencapaian">Pencapaian</a></li>
+        <li><a href="#keahlian">Keahlian</a></li>
+        <li><a href="#pengalaman">Pengalaman</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+    </ul>
+    <div class="menu-btn" id="menuOpen">
+        <i class="fa-solid fa-bars-staggered"></i>
+    </div>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+    <a href="#home"><i class="fa-solid fa-house"></i> Beranda</a>
+    <a href="#profil"><i class="fa-solid fa-user"></i> Profil</a>
+    <a href="#pencapaian"><i class="fa-solid fa-trophy"></i> Pencapaian</a>
+    <a href="#keahlian"><i class="fa-solid fa-bolt"></i> Keahlian</a>
+    <a href="#pengalaman"><i class="fa-solid fa-briefcase"></i> Pengalaman</a>
+    <a href="#kontak"><i class="fa-solid fa-envelope"></i> Kontak</a>
+</div>
+
+<!-- Beranda -->
+<section id="home" style="background-color: var(--bg-section-alt);">
+    <div class="section-container hero">
+        <div class="hero-info" data-aos="fade-up">
+            <h1>M. Fajar Hidayat</h1>
+            <p>Mahasiswa D4 Teknik Pengolahan Limbah | Politeknik Perkapalan Negeri Surabaya (PPNS)</p>
+        </div>
+        <div class="hero-img" data-aos="zoom-in">
+            <img src="https://lh3.googleusercontent.com/u/0/d/1oIApUAfaFdC1MU84mJ4Ik5Rz98x8Eglp" alt="Foto Profil">
+        </div>
+    </div>
+</section>
+
+<!-- Profil -->
+<section id="profil" style="background-color: var(--bg-body);">
+    <div class="section-container">
+        <h2 data-aos="fade-right">Profil</h2>
+        <div class="card" data-aos="fade-up">
+            <p style="color: #ffffff;">Saya memiliki semangat tinggi, bertanggung jawab, mampu bekerja dengan tim serta terbuka untuk menerima kritik dan saran dalam pengembangan diri profesional.</p>
+            <a href="https://drive.google.com/file/d/1nxMFAlxvdwrtJIs-hLqkqiVZYTMpN18v/view?usp=sharing" target="_blank" class="btn-link">
+                <i class="fa-solid fa-eye"></i> Lihat CV Lengkap
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Pencapaian -->
+<section id="pencapaian" style="background-color: var(--bg-section-alt);">
+    <div class="section-container">
+        <h2 data-aos="fade-right">Pencapaian</h2>
+        <div class="list-grid" data-aos="fade-up">
+            <div class="list-item">
+                <h3>Juara 1 Lomba "40 Days Challenge for Sustainability"</h3>
+                <span class="year-tag">2023</span>
+                <a href="https://drive.google.com/file/d/1F2npf6GVlqfzk7faueYTqnXRKGY3zZ-P/view?usp=sharing" target="_blank" class="btn-link">Sertifikat</a>
+            </div>
+            <div class="list-item">
+                <h3>Semifinalis Olimpiade Teknik Kimia UISI</h3>
+                <span class="year-tag">2024</span>
+                <a href="https://drive.google.com/file/d/1G_mHU6v8ZsOS5z6s77ASBsfWc24A_WxV/view?usp=drive_link" target="_blank" class="btn-link">Sertifikat</a>
+            </div>
+            <div class="list-item">
+                <h3>Lilin Beraroma Cabai (LINCA) Sebagai Alternatif Pengusir Lalat</h3>
+                <span class="year-tag">2022</span>
+                <a href="https://drive.google.com/file/d/18jdcs1M3w6QnDKsmyz_VhpQ3R2hYFSh0/view?usp=sharing" target="_blank" class="btn-link">Jurnal</a>
+            </div>
+            <div class="list-item">
+                <h3>Analisis Faktor Kritis Pada Sistem Rantai Jangkar Sebagai Tinjauan Kekuatan Struktural Dan Risiko Kegagalan Operasional</h3>
+                <span class="year-tag">2025</span>
+                <a href="https://drive.google.com/file/d/1HpU_ZhaqAwxZ4PhaVGVWfK0c-n_1B0ex/view?usp=sharing" target="_blank" class="btn-link">Esai</a><a href="https://drive.google.com/file/d/1WyaJcFYtdvT_BW2hlbJeVyQKp-oH85-X/view?usp=drive_link" target="_blank" class="btn-link">Sertifikat</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Keahlian -->
+<section id="keahlian" style="background-color: var(--bg-body);">
+    <div class="section-container">
+        <h2 data-aos="fade-right">Keahlian</h2>
+        <div class="list-grid" data-aos="fade-up">
+            <div class="list-item">
+                <h3>AutoCAD</h3>
+                <span class="year-tag">Technical Drawing</span>
+                <a href="https://drive.google.com/file/d/1tOLVib-CCVIqfRFIl2ejzwXXpIlZQANJ/view?usp=sharing" target="_blank" class="btn-link">Sertifikasi</a>
+            </div>
+
+            <div class="list-item">
+                <h3>Microsoft Excel</h3>
+                <span class="year-tag"> Data Analysis and Visuals (graphs)</span>
+                <a href="https://drive.google.com/file/d/1-C_f_23o33QJP8r9ziRMiGH8CSYGrfx3/view?usp=sharing" target="_blank" class="btn-link">Sertifikasi</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Pengalaman -->
+<section id="pengalaman" style="background-color: var(--bg-section-alt);">
+    <div class="section-container">
+        <h2 data-aos="fade-right">Pengalaman</h2>
+        <div class="list-grid" data-aos="fade-up">
+            <div class="list-item">
+                <h3>Majelis Perwakilan Kelas (MPK)</h3>
+                <span class="year-tag">2022 - 2024</span>
+                <p>Penyaluran aspirasi siswa dan pengawasan kinerja OSIS.</p>
+            </div>
+            <div class="list-item">
+                <h3>Koordinator Green House SMAN 12 Surabaya</h3>
+                <span class="year-tag">2023 - 2024</span>
+                <p>Manajemen budidaya tanaman dan program lingkungan.</p>
+            </div>
+            <div class="list-item">
+                <h3>Himpunan Mahasiswa Teknik Pengolahan Limbah (HIMATEKPL)</h3>
+                <span class="year-tag">2026 - Sekarang</span>
+                <p>Staf Ahli Departemen Dalam Negeri.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Kontak -->
+<section id="kontak" style="background-color: var(--bg-body);">
+    <div class="section-container">
+        <h2 data-aos="fade-right">Kontak</h2>
+        <div class="contact-grid" data-aos="fade-up">
+            <a href="mailto:fh990307@gmail.com" class="contact-link"><i class="fa-solid fa-envelope"></i><span>Email</span></a>
+            <a href="https://wa.me/6283834184373" class="contact-link"><i class="fa-brands fa-whatsapp"></i><span>WhatsApp</span></a>
+            <a href="https://www.linkedin.com/in/m-fajar-hidayat" target="_blank" class="contact-link"><i class="fa-brands fa-linkedin-in"></i><span>LinkedIn</span></a>
+            <a href="https://www.instagram.com/fajarhiidayat_" target="_blank" class="contact-link"><i class="fa-brands fa-instagram"></i><span>Instagram</span></a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 M. Fajar Hidayat - Teknik Pengolahan Limbah</p>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+    AOS.init({ 
+        duration: 800, 
+        once: true,
+        disable: window.innerWidth < 768
+    });
+
+    const menuOpen = document.getElementById('menuOpen'), 
+          mobileNav = document.getElementById('mobileNav'), 
+          overlay = document.getElementById('overlay'), 
+          navLinks = document.querySelectorAll('.mobile-nav a');
+
+    function toggleMenu() {
+        mobileNav.classList.toggle('active'); 
+        overlay.classList.toggle('active');
+        document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : 'auto';
+    }
+
+    menuOpen.onclick = toggleMenu; 
+    overlay.onclick = toggleMenu;
+    navLinks.forEach(l => l.onclick = toggleMenu);
+
+    window.addEventListener('scroll', () => {
+        let current = "";
+        const sections = document.querySelectorAll("section");
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            if (pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute("id");
+            }
+        });
+
+        const desktopLinks = document.querySelectorAll(".nav-desktop a");
+        desktopLinks.forEach((a) => {
+            a.classList.remove("active");
+            if (a.getAttribute("href").includes(current)) {
+                a.classList.add("active");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
